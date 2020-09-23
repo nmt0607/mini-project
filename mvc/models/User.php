@@ -18,6 +18,10 @@ class User extends DB{
     }
     function update($name,$password,$email,$age){
         $sql=
+            
+            
+            
+            
     }
 }
 ?>
