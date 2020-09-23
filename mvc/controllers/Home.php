@@ -1,6 +1,6 @@
 <?php
 
-// http://localhost/live/Home/Show/1/2
+
 
 class Home extends Controller{
 
@@ -25,5 +25,12 @@ class Home extends Controller{
             "SV" => $teo->SinhVien()
         ]);
     }
+    function a(){
+        $user=$this->model("User");
+        $result=$user->get();
+        $row = mysqli_fetch_assoc($result);    
+        $this->view("news",["name"=>$row["name"]]);
+    }
+
 }
 ?>
