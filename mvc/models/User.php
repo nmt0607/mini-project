@@ -17,11 +17,7 @@ class User extends DB{
         return mysqli_query($this->con,$sql);
     }
     function update($name,$password,$email,$age){
-        $sql=
-            
-            
-            
-            
+        $sql=    
     }
 }
 ?>
