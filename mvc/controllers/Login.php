@@ -1,6 +1,6 @@
 <?php 
     class Login extends Controller{
-        function (){
+        function a(){
             $this->view("login");
         }
         function check(){
