@@ -1,43 +1,68 @@
 <?php 
     class Login extends Controller{
         function a(){
-            $this->view("login");
+            $check= $this->checkss();
+            if($check){
+                header("Location:http://localhost/mini-project/Home/profileuser");
+            } else{
+                $this->view("login");
+            }
         }
-        function check(){
-            unset($_SESSION["emaillogin"]);
-            unset($_SESSION["passwordlogin"]);
-            unset($_SESSION["checkemail"]);
-            unset($_SESSION["checkpassword"]);
-            if(isset($_POST["login"])){
-                
+        function logina(){
+            if(isset($_POST["email"])){
                 $email=$_POST["email"];
-                
                 $password=$_POST["password"];
                 $user=$this->model("User");
                 $result=$user->getByEmail($email);
                 if($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         if($password===$row["password"]){
-                            echo "thanh cong";
+                            if($_POST["rememberme"]==="true"){
+                                $cookie=$this->generateRandomString(32);
+                                setcookie("cookie",$cookie,time()+86400*30,'/');
+                                $_SESSION["email"]=$row["email"];
+                                $_SESSION["password"]=$row["password"];
+                                $result1 = $user->updateRandomByEmail($row["email"],$cookie);
+                                $resarray["status"]="true";
+                                $resarray["message"]=$_POST["rememberme"];
+                                echo json_encode($resarray);
+
+                            } else {
+                                $_SESSION["email"]=$row["email"];
+                                $_SESSION["password"]=$row["password"];
+                                $resarray["status"]="true";
+                                $resarray["message"]="Login success";
+                                echo json_encode($resarray);
+                            }
+
                         } else{
-                            $_SESSION["checkpassword"]=1;
-                            $_SESSION["emaillogin"]=$email;
-                            $_SESSION["passwordlogin"]=$password;
-                            header("Location: a");
+                            $resarray["status"]="false";
+                            $resarray["message"]="Password not matching";
+                            echo json_encode($resarray);
                         }
                     }
                 }else {
-                    $_SESSION["checkemail"]=1;
-                    $_SESSION["emaillogin"]=$email;
-                    $_SESSION["passwordlogin"]=$password;
-                    header("Location: a");
+                    $resarray["status"]="false";
+                    $resarray["message"]="Email not exist";
+                    echo json_encode($resarray);
                 }
             } else{
-                header("Location: a");
+                $resarray["status"]="false";
+                $resarray["message"]="Submit failed";
+                echo json_encode($resarray);
             }
 
 
     
+        }
+        function generateRandomString($length) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
         }
     }
 ?>

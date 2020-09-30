@@ -5,9 +5,9 @@ class Register extends Controller
     {
         $this->view("register");
     }
-    function check()
+    function register()
     {
-        if (isset($_POST["signup"])) {
+        if (isset($_POST["email"])) {
             $user = $this->model("User");
             $name = $_POST["name"];
             $password = $_POST["password"];
@@ -15,18 +15,14 @@ class Register extends Controller
             $age = $_POST["age"];
             $result = $user->getByEmail($email);
             if ($result->num_rows > 0) {
-                $_SESSION["name"] = $name;
-                $_SESSION["email"] = $email;
-                $_SESSION["password"] = $password;
-                $_SESSION["age"] = $age;
-                header("Location: a");
+                $res_array['status']=1;
+                $res_array['mess']="Email is exist";
+                echo json_encode($res_array);
             } else {
                 $user->newUser($name, $password, $email, $age, 1);
-                unset($_SESSION["name"]);
-                unset($_SESSION["email"]);
-                unset($_SESSION["password"]);
-                unset($_SESSION["age"]);
-                echo "echo";
+                $res_array['status']=2;
+                $res_array['mess']="Success";
+                echo json_encode($res_array);
             }
         }
     }

@@ -5,41 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossOrigin="anonymous" />
-  <link rel="stylesheet" href="http://localhost/php-mvc-1/mvc/views/assets/css/register.css">
+<!--   <link rel="stylesheet" href="http://localhost/mini-project/mvc/views/assets/css/register.css"> -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <title>Document</title>
 </head>
 
 <body>
-  <form class="login-form" action="./check" method="POST" autocomplete="off">
+  <form class="login-form">
     <span id="mess_email" class="span"></span>
-    <?php 
-      if(isset($_SESSION["checkemail"])){
-        echo "<span class='span'>Email not exist</span>";
-      }
-    ?>
-    <input id="email" type="email" name="email" placeholder="Email" value="<?php 
-    if(isset($_SESSION["emaillogin"])){
-      echo $_SESSION["emaillogin"] ;
-    }
-    ?>" />
+    <input id="email" type="email" name="email" placeholder="Email" />
     <div class="input-icon">
       <span id="mess_pass" class="span"></span>
-      <?php 
-      if(isset($_SESSION["checkpassword"])){
-        echo "<span class='span'>Password wrong</span>";
-      }
-    ?>
-      <input id="password" type="password" name="password" placeholder="Password" value="<?php 
-    if(isset($_SESSION["passwordlogin"])){
-      echo $_SESSION["passwordlogin"] ;
-    }
-    ?>" />
+
+      <input id="password" type="password" name="password" placeholder="Password" />
       <i id="show" class="fa fa-eye show-password"></i>
     </div>
+    <input type="checkbox" id="rememberme" name="rememberme" />
     <a href="#" class="forgot">Forgot password?</a>
-    <button name="login">Sign In</button>
+    <button type="button" id="button" name="login">Sign In</button>
   </form>
 </body>
-<script src="http://localhost/php-mvc-1/mvc/views/assets/js/login.js"></script>
+<script src="http://localhost/mini-project/mvc/views/assets/js/login.js"></script>
 
 </html>
